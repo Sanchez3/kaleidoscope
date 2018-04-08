@@ -50,6 +50,9 @@
                     this._sprite[i].position.x = 0;
                 }
             }
+            this.input.onDown.add(this.tap, this);
+            this.input.onUp.add(this.release, this);
+            this.input.addMoveCallback(this.drag, this);
 
 
 
@@ -65,6 +68,36 @@
             //         onUpdate: function() {}
             //     });
             // }
+        },
+        tap: function() {
+            this.pressed = true;
+            this.reference = this.game.input.x;
+            this.timestamp = Date.now();
+
+        },
+        drag: function(pointer, x, y) {
+            if (this.pressed) {
+                var delta = this.reference - x;
+                if (delta > 2 || delta < -2) {
+                    this.reference = x;
+                    this._draw(this.offset + delta);
+                }
+            }
+        },
+        _draw: function(x) {
+            var that = this;
+            var cx, cy, dx, dy, hx, hy;
+            dx = x;
+            dy = x / that.game.width * that.game.height;
+
+            for (var j = this._sprite.length - 1; j >= 0; j--) {
+                TweenMax.set(this._sprite[j], { x: dx, y: dy })
+            }
+
+        },
+        release: function() {
+            this.pressed = false;
+            this.timestamp = Date.now();
         },
         update: function() {}
 
