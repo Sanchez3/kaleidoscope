@@ -15,11 +15,11 @@
             this.group = this.add.group();
             var s = 0;
             var _angle = 0;
-            var wWidth = window.innerWidth;
-            var wHeight = window.innerHeight;
+            var wWidth = this.game.width;
+            var wHeight = this.game.height;
             this.radiusX = wWidth / 2;
             this.radiusY = wHeight / 2;
-            this.slices = 16;
+            this.slices = 12;
             this.image = this.make.image(0, 0, 'p2');
             console.log(this.image.height)
             var slices = this.slices;
@@ -50,17 +50,21 @@
                     this._sprite[i].position.x = 0;
                 }
             }
-            for (var j = this._sprite.length - 1; j >= 0; j--) {
-                this._sprite[j].angle=-15
-                TweenMax.to(this._sprite[j], 10, {
-                    yoyo: true,
-                    repeat:-1,
-                    x: -500,
-                    y: -200,
-                    angle: -55,
-                    onUpdate: function() {}
-                });
-            }
+
+
+
+
+            // for (var j = this._sprite.length - 1; j >= 0; j--) {
+            //     this._sprite[j].angle=-15
+            //     TweenMax.to(this._sprite[j], 10, {
+            //         yoyo: true,
+            //         repeat:-1,
+            //         x: -500,
+            //         y: -200,
+            //         angle: -55,
+            //         onUpdate: function() {}
+            //     });
+            // }
         },
         update: function() {}
 

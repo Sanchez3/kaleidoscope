@@ -17,6 +17,10 @@
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
             this.stage.disableVisibilityChange = true;
+            console.log(this.game.resolution)
+            // this.game.resolution=window.devicePixelRatio;
+            // this.game.scale.refresh();
+            
             this.game.state.start('Preloader');
         }
 
