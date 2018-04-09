@@ -113,7 +113,8 @@
 
             //运动轨迹x^2+y^2=(wWidth^2)/4
             this.offset = 0;
-            this.oprogress=0;
+            this.oprogress = 0;
+            this.reference = {};
             this.input.onDown.add(this.tap, this);
             this.input.onUp.add(this.release, this);
             this.input.addMoveCallback(this.drag, this);
@@ -121,35 +122,38 @@
         },
         tap: function() {
             this.pressed = true;
-            this.reference = this.game.input.x;
+            this.reference.x = this.game.input.x;
+            this.reference.y = this.game.input.y;
             this.timestamp = Date.now();
-             // this.oprogress=this.tweenA[0].progress();
+            // this.oprogress=this.tweenA[0].progress();
         },
         drag: function(pointer, x, y) {
             if (this.pressed) {
-                console.log(this.reference)
-                var delta = this.reference - x;
-                if (delta > 2 || delta < -2) {
+                var delta = {};
+                delta.y = this.reference.y - y;
+                delta.x = this.reference.x - x;
+                delta.s = Math.sqrt(delta.y * delta.y + delta.x * delta.x);
+                if (delta.s > 2 || delta.s < -2) {
                     // this.reference = x;
-                    this._draw(delta + this.offset);
+                    this._draw(delta.s + this.offset);
                 }
             }
         },
         _draw: function(x) {
             var that = this;
             var cx, cy, dx, dy, hx, hy;
-            dx = x/that.game.width*0.5;
+            dx = x / that.game.width * 0.5;
             dy = x / that.game.width * that.game.height;
 
             for (var j = this._sprite.length - 1; j >= 0; j--) {
-                this.tweenA[j].progress(this.oprogress+dx);
+                this.tweenA[j].progress(this.oprogress + dx);
             }
 
         },
         release: function() {
             this.pressed = false;
             this.timestamp = Date.now();
-            this.oprogress=this.tweenA[0].progress();
+            this.oprogress = this.tweenA[0].progress();
 
         },
         update: function() {}
